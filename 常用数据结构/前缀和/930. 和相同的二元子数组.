@@ -1,1 +1,31 @@
-
+///
+这道题目的整体思路就是通过哈希表+前缀和来找，本质是找一个和为goal的子数组
+那么为什么map[0]!=1,也就是不先设为1,这是因为在循环中首先将map[sum]先加1，变相将其变为了1
+///
+class Solution {
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        unordered_map<int,int> map={};
+        int sum=0,count=0;
+        for(auto c:nums){
+            map[sum]++;
+            sum+=c;
+            if(map.find(sum-goal)!=map.end()) count+=map[sum-goal];
+        }
+        return count;
+    }
+};
+//如果我们考虑前缀和自行定义的情况，code应该如下
+class Solution {
+public:
+    int numSubarraysWithSum(vector<int>& nums, int goal) {
+        unordered_map<int, int> map = { {0, 1} }; // 初始化map，{0, 1} 表示sum为0时，计数为1
+        int sum = 0, count = 0; 
+        for (auto c : nums) {
+            sum += c;
+            if (map.find(sum - goal) != map.end()) count += map[sum - goal]; // 如果存在，累加到count中
+            map[sum]++; // 更新当前sum的计数
+        }
+        return count;
+    }
+};
