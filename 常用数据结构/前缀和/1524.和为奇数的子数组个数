@@ -1,5 +1,6 @@
 class Solution {
 const int CONST=1e9+7;
+//这里唯一要注意的是为什么even=1.那就是本身的和为奇数的时候，前缀和为0的时候本身就是一个符合要求的数组，所以要为1
 public:
     int numOfSubarrays(vector<int>& arr) {
         int odd=0,even=1,sum=0,count=0;
