@@ -1,0 +1,16 @@
+class Solution {
+public:
+//这道题最主要是要想到，假设前缀和是a和b，那么(a-b)%k==0说明a%k==b%k。
+    int subarraysDivByK(vector<int>& nums, int k) {
+        int sum=0,count=0;
+        unordered_map<int,int> map;//记录前缀和个数
+        map[0]=1;
+        for(auto x:nums){
+            sum+=x;
+            int res=(sum%k+k)%k;//这里注意余数是负数的时候，我们要+k，这样就可以保证余数不为负数
+            if(map.count(res)) count+=map[res];
+            map[res]++;
+        }
+        return count;
+    }
+};
