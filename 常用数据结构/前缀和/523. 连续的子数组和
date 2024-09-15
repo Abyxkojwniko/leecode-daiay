@@ -1,0 +1,22 @@
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        if(nums.size()<2) return false;
+        unordered_map<int,int> map;
+        //这里map[0]=-1是因为如果前缀和相加为k的倍数，那么总长度应该为i+1，其余和前一题思路其实并无差别
+        map[0]=-1;
+        int res=0;
+        bool ans=false;
+        for(int i=0;i<nums.size();i++){
+            res=(res+nums[i])%k;
+            if(map.count(res)){
+                if(i-map[res]>=2){
+                    ans=true;
+                    break;
+                }
+            }
+            else map[res]=i;
+        }
+        return ans;
+    }
+};
