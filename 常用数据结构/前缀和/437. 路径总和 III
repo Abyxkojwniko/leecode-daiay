@@ -1,0 +1,20 @@
+class Solution {
+public:
+//这道题同样用前缀和的思想去进行解决，每次到一个新的节点，就是找和为sum-targetSum的前缀和是否存在，然后这道题也要注意lamba形式如何利用
+//如果选用函数调用的形式，那么map就应该设置成为全局变量
+    int pathSum(TreeNode* root, int targetSum) {
+        int ans=0;
+        unordered_map<long long,int> map={{0,1}};
+        auto dfs=[&](auto&& dfs,TreeNode* node,long long sum){
+            if(node==nullptr) return;
+            sum+=node->val;
+            ans+=map.contains(sum-targetSum)?map[sum-targetSum]:0;
+            map[sum]++;
+            dfs(dfs,node->left,sum);
+            dfs(dfs,node->right,sum);
+            map[sum]--;
+        };
+        dfs(dfs,root,0);
+        return ans;
+    }
+};
