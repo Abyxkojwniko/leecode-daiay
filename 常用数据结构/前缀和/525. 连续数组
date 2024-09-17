@@ -1,0 +1,20 @@
+class Solution {
+public:
+//这道题使用相同的方式，实际上一个连续的相同的1,0个数的连续子数组串，那么只要1,0的数字之差，在前面出现就可以了
+//而且只需要记录第一次出现的值，这样确保找到该差值下length的长度是最大的
+    int findMaxLength(vector<int>& nums) {
+        unordered_map<int,int> map={{0,-1}};
+        int count=0,maxlength=0;
+        for(int i=0;i<nums.size();i++){
+            int num=nums[i];
+            if(num) count++;
+            else count--;
+            if(map.contains(count)){
+                int preIndex=map[count];
+                maxlength=max(maxlength,i-preIndex);
+            }
+            else map[count]=i;
+        }
+        return maxlength;
+    }
+};
