@@ -1,0 +1,24 @@
+class Solution {
+public:
+    long long maximumSubarraySum(vector<int>& nums, int k) {
+//这道题在满足题意的同时，就是找到相同值的时候，其前缀和应该最小才行
+        long long ans=LLONG_MIN,sum=0;
+        unordered_map<int,long long> min_s;//记录前缀和，并且更新每个值对应的最小前缀和
+        for(int x:nums){
+            auto it=min_s.find(x+k);
+            if(it!=min_s.end()){
+                ans=max(ans,sum+x-it->second);//进行更新最大值
+            }
+            it=min_s.find(x-k);
+            if(it!=min_s.end()){
+                ans=max(ans,sum+x-it->second);
+            }
+            it=min_s.find(x);
+            if(it==min_s.end()||sum<it->second){
+                min_s[x]=sum;//更新这个值对应的最小前缀和
+            }
+            sum+=x;
+        }
+        return ans==LLONG_MIN?0:ans;
+    }
+};
