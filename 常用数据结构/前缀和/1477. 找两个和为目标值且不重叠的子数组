@@ -1,0 +1,24 @@
+class Solution {
+public:
+//这道题使用滑动窗口的思想去解决问题，两个不相交的数组，以一个点为界限，那么就是左边的长度最小+右边的长度最小，得到最终的长度最小
+    int minSumOfLengths(vector<int>& arr, int target) {
+        int left=0,right,sum=0,n=arr.size(),minlength=INT_MAX;
+        vector<int> length(n+1,0);//记录左边的长度最小
+        length[0]=n+1;//第一个为0，保证不存在的时候变为-1
+        for(right=0;right<n;right++){
+            sum+=arr[right];
+            while(sum>target){
+                sum-=arr[left++];//如果现在都大，那么就要减去左边的，找到left到right之间的最小值
+            }
+            if(sum==target){
+                int len=right-left+1;//满足条件，找到现在的长度
+                minlength=min(minlength,len+length[left]);//现在的长度和左边的最小相加，找最小
+                length[right+1]=min(length[right],len);//这里是找到当前位置左边的最小长度
+            }
+            else{
+                length[right+1]=length[right];//如果不满足，那么就是继承左边的
+            }
+        }
+        return minlength>n?-1:minlength;
+    }
+};
