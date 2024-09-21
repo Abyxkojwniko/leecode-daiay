@@ -1,0 +1,25 @@
+class Solution {
+public:
+//这道题使用贪心算法，在数组中，找到满足条件的右坐标最小的数组，然后从右坐标继续以这种方式往后找，就能找到
+    int maxNonOverlapping(vector<int>& nums, int target) {
+        int n=nums.size();
+        int ans=0,i=0;
+        while(i<n){
+            unordered_set map={0};
+            int sum=0;
+            while(i<n){
+                sum+=nums[i];
+                if(map.find(sum-target)!=map.end()){
+                    ans++;
+                    break;
+                }
+                else{
+                    map.insert(sum);
+                    i++;
+                }
+            }
+            i++;
+        }
+        return ans;
+    }
+};
