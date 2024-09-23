@@ -1,0 +1,23 @@
+class Solution {
+public:
+//这道题和前面奇偶的题目差不多，但是返回的是一个数组
+    vector<string> findLongestSubarray(vector<string>& array) {
+        unordered_map<int,int> map;
+        map[0]=-1;
+        int count=0,prevIndex=-1,maxlength=0,startIndex=0;//prevIndex是上一个的点，但是我们要从新的开始，所以要+1；
+        for(int i=0;i<array.size();i++){
+            if(isalpha(array[i][0])) count++;//如果是字母
+            else count--;
+            if(map.find(count)!=map.end()){
+                if(i-map[count]>maxlength){//如果大于maxlength就更新
+                    prevIndex=map[count];
+                    startIndex=prevIndex+1;
+                    maxlength=i-map[count];
+                }
+            }
+            else map[count]=i;
+        }
+        if(maxlength==0) return {};
+        return vector<string>(array.begin()+startIndex,array.begin()+startIndex+maxlength);
+    }
+};
