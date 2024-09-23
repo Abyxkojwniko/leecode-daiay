@@ -1,0 +1,15 @@
+class Solution {
+public:
+//没什么好说的，简单的哈希表
+    int numIdenticalPairs(vector<int>& nums) {
+        unordered_map<int,int> map;
+        int count=0;
+        for(auto c:nums){
+            if(map.find(c)!=map.end()){
+                count+=map[c];
+            }
+            map[c]++;
+        }
+        return count;
+    }
+};
