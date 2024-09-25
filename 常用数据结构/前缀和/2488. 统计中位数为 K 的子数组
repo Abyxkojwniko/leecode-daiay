@@ -1,0 +1,20 @@
+class Solution {
+public:
+    int countSubarrays(vector<int>& nums, int k) {
+//这道题根据提示，首先注意是一个数字互不相同的数组，那么就保证没有了重复数字的出现，k就只有个一个位置，并且k一定要在子数组中
+//那么第一件事情就是找到k的位置，找到之后，k之前的比k小的数和比k大的数和数量之差加上k之后的比k小的数和比k大的数的数量之差一定等于0或者1
+        unordered_map<int,int> map;
+        map[0]=1;
+        int idx=find(nums.begin(),nums.end(),k)-nums.begin();//找到位置
+        for(int i=idx-1,x=0;i>=0;--i){
+            x+=nums[i]<k?1:-1;//左边的记录以比k更小的数字为标准
+            ++map[x];
+        }
+        int ans=map[0]+map[-1];//这里记录的是更小的，所以是加上0和-1
+        for(int i=idx+1,x=0;i<nums.size();++i){
+            x+=nums[i]>k?1:-1;//右边以比k更大的数字为标准
+            ans+=map[x]+map[x-1];//右边的要不和左边的相同，要不然就大一个，这样才能保证子数组中比k的大的数字比比k小的数字的数量相同或者多1
+        }
+        return ans;
+    }
+};
