@@ -1,0 +1,13 @@
+class Solution {
+public:
+//这道题和水缸水最多的题目并不一致，这道题应该是选取在当前价格前，最小的价格和现在价格的差值最大的
+    int maxProfit(vector<int>& prices) {
+        int ans=0;
+        int min_price=prices[0];
+        for(auto x:prices){
+            ans=max(ans,x-min_price);
+            min_price=min(min_price,x);
+        }
+        return ans;
+    }
+};
