@@ -2,7 +2,7 @@ class Solution {
 public:
 //这道题也是和前面余数相同的题目，但是这里的前缀和是满足和总数组的和的余数相同，并且right-left这个子数组的长度最小
 //在更新的时候，找到的就是当前到nums[i]的前缀和中，保证最短的数量下，其子数组的前缀和为（s[right]-s[left]）%p==rem
-//那么找前面数组的合适的手，就是找余数为（sum-rem+p）%p
+//那么找前面数组的合适的，也就是(s[right]%p-rem+p)%p==s[left]%p
     int minSubarray(vector<int>& nums, int p) {
         int rem=accumulate(nums.begin(),nums.end(),0LL)%p;
         if(rem==0) return 0;
