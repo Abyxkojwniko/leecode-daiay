@@ -1,0 +1,17 @@
+class Solution {
+public:
+//这道题首先想到找到数字上的最大值和次大值，但是实际上只需要记录最大值，然后每次找到最大位数相同的，与现在的最大和比较即可
+    int maxSum(vector<int>& nums) {
+        vector<int> s(10,INT_MIN);//记录最大值
+        int ret=-1;
+        for(auto c:nums){
+            int count=0;
+            for(int x=c;x;x/=10){
+                count=max(count,x%10);//找最大值
+            }
+            ret=max(ret,c+s[count]);
+            s[count]=max(s[count],c);
+        }
+        return ret;
+    }
+};
