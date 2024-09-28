@@ -1,0 +1,17 @@
+class Solution {
+public:
+//这道题也是和上面一道差不多，求出前缀和中满足nums[i] % modulo == k的个数
+//然后因为要保证cnt % modulo == k，那么s[right]-s[left]的数量满足前者，那么就是s[left]满足(s-k+modulo)%modulo+k=s[right]
+    long long countInterestingSubarrays(vector<int>& nums, int modulo, int k) {
+        unordered_map<int,int> map;
+        map[0]=1;
+        long long ans=0;
+        int s=0;
+        for(auto c:nums){
+            s+=c%modulo==k;
+            ans+=map[(s-k+modulo)%modulo];
+            map[s%modulo]++;
+        }
+        return ans;
+    }
+};
