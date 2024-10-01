@@ -1,0 +1,21 @@
+class Solution {
+public:
+//这道题和上一道差不多，也就是数组中的最大数对和，都是进行哈希表，然后找到当前sum的最大值进行记录
+    int maximumSum(vector<int>& nums) {
+        unordered_map<int,int> map;
+        int maxv=-1;
+        for(auto c:nums){
+            int sum=0,tmp=c;
+            while(c){
+                sum+=c%10;
+                c=c/10;
+            }
+            if(map.find(sum)!=map.end()){
+                maxv=max(map[sum]+tmp,maxv);
+                if(tmp>map[sum]) map[sum]=tmp;
+            }
+            else map[sum]=tmp;
+        }
+        return maxv;
+    }
+};
