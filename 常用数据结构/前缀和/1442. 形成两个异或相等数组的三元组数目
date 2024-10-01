@@ -1,0 +1,18 @@
+class Solution {
+public:
+//这道题我们已经知道了实际是子数组的异或和为0，所以是s[i]^s[k+1]=0
+    int countTriplets(vector<int>& arr) {
+        int n=arr.size();
+        vector<int> s(n+1);
+        for(int i=0;i<n;i++) s[i+1]=arr[i]^s[i];
+        unordered_map<int,int> map,total;
+        int ans=0;
+        for(int k=0;k<n;k++){
+            if(map.count(s[k+1])) ans+=map[s[k+1]]*k-total[s[k+1]];//一个子数组为0，其中三元组的个数为k-i个，所以所有的相加就是左边式子
+            map[s[k]]++;
+            total[s[k]]+=k;//这里为什么要+k，请看下方
+        }
+        return ans;
+    }
+};
+//(k−i 1)+(k−i2)+⋯+(k−i m)=m⋅k−(i 1+i 2+⋯+i m​)也就是说，当遍历下标 k 时，我们需要知道所有满足 S i=S k+1的下标 i的出现次数m,下标 i 之和
