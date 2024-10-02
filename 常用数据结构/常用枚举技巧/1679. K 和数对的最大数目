@@ -1,0 +1,21 @@
+class Solution {
+public:
+//这道题主要就是注意如果是自己和自己组成的情况判断
+    int maxOperations(vector<int>& nums, int k) {
+        unordered_map<int,int> map;
+        for(auto num:nums) map[num]++;
+        int count=0;
+        for(auto num:nums){
+            if(map.find(k-num)!=map.end()){
+                if(k-num!=num){
+                    int tmp=min(map[num],map[k-num]);
+                    count+=tmp;
+                }
+                else count+=map[num]/2;
+                map[num]=0;
+                map[k-num]=0;
+            }
+        }
+        return count;
+    }
+};
