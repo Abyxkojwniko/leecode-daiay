@@ -1,0 +1,20 @@
+class Solution {
+public:
+//记录后续的最小值，prev记录前面的最小值
+    int minimumSum(vector<int>& nums) {
+        int n=nums.size();
+        vector<int> s(n);
+        s[n-1]=nums[n-1];
+        for(int i=n-2;i>1;i--){
+            s[i]=min(s[i+1],nums[i]);
+        }
+        int prev=nums[0],ans=INT_MAX;
+        for(int i=1;i<n-1;i++){
+            if(nums[i]>prev&&nums[i]>s[i+1]){
+                ans=min(ans,prev+nums[i]+s[i+1]);
+            }
+            prev=min(prev,nums[i]);
+        }
+        return ans==INT_MAX?-1:ans;
+    }
+};
