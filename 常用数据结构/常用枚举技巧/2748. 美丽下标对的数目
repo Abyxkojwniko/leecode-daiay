@@ -1,0 +1,18 @@
+class Solution {
+public:
+//这道题目了解如果这两个数的余数是互质的，那么两个数就是互质的
+    int countBeautifulPairs(vector<int>& nums) {
+        int ans=0;
+        vector<int> cnt(10);
+        for(auto x:nums){
+            for(int y=1;y<10;y++){
+                if(cnt[y]&&gcd(y,x%10)==1) ans+=cnt[y];
+            }
+            while(x>=10){
+                x/=10;
+            }
+            cnt[x]++;
+        }
+        return ans;
+    }
+};
