@@ -1,0 +1,17 @@
+class Solution {
+public:
+//同样的想法，s[i]+i和s[j]-j的最大值，所以一个数组记录后面的最大值
+    int maxScoreSightseeingPair(vector<int>& values) {
+        int n=values.size();
+        vector<int> s(n);
+        s[n-1]=values[n-1]-(n-1);
+        for(int i=n-2;i>0;i--){
+            s[i]=max(s[i+1],values[i]-i);
+        }
+        int maxvale=INT_MIN;
+        for(int i=0;i<n-1;i++){
+            maxvale=max(values[i]+i+s[i+1],maxvale);
+        }
+        return maxvale;
+    }
+};
