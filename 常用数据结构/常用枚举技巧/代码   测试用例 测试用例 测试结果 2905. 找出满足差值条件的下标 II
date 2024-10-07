@@ -1,0 +1,18 @@
+class Solution {
+public:
+    vector<int> findIndices(vector<int>& nums, int indexDifference, int valueDifference) {
+        int minI=0,maxI=0;
+        for(int j=indexDifference;j<nums.size();j++){
+            int i=j-indexDifference;
+            maxI=nums[i]>nums[maxI]?i:maxI;
+            minI=nums[i]<nums[minI]?i:minI;
+            if(nums[maxI]-nums[j]>=valueDifference){
+                return {maxI,j};
+            }
+            if(nums[j]-nums[minI]>=valueDifference){
+                return {minI,j};
+            }
+        }
+        return {-1,-1};
+    }
+};
