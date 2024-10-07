@@ -1,0 +1,25 @@
+class Solution {
+public:
+    const long long MOD = 1000000007;
+    int rev(int x){
+        int ret=0;
+        while(x){
+            int tmp=x%10;
+            ret=tmp+ret*10;
+            x/=10;
+        }
+        return ret;
+    }
+    int countNicePairs(vector<int>& nums) {
+        int ans=0;
+        unordered_map<int,int> map;
+        for(auto num:nums){
+            int temp=num-rev(num);
+            if(map.find(temp)!=map.end()){
+                ans=(ans+map[temp])%MOD;
+            }
+            map[temp]++;
+        }
+        return ans;
+    }
+};
