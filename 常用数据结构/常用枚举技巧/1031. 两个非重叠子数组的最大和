@@ -1,0 +1,20 @@
+class Solution {
+public:
+//动态规划，前面的最大值加上当前值的最大值就是最大值
+    int find(vector<int>nums,int firstLen,int secondLen){
+        int prev=accumulate(nums.begin(),nums.begin()+firstLen,0);
+        int maxSuml=prev;
+        int lat=accumulate(nums.begin()+firstLen,nums.begin()+firstLen+secondLen,0);
+        int res=maxSuml+lat;
+        for(int i=firstLen+secondLen,j=firstLen;i<nums.size();i++,j++){
+            prev+=nums[j]-nums[j-firstLen];
+            maxSuml=max(prev,maxSuml);
+            lat+=nums[i]-nums[i-secondLen];
+            res=max(res,maxSuml+lat);
+        }
+        return res;
+    }
+    int maxSumTwoNoOverlap(vector<int>& nums, int firstLen, int secondLen) {
+        return max(find(nums,firstLen,secondLen),find(nums,secondLen,firstLen));
+    }
+};
