@@ -1,0 +1,20 @@
+class Solution {
+public:
+//动态规划+移动窗口
+    int maximizeWin(vector<int>& prizePositions, int k) {
+        int n=prizePositions.size();
+        if(2*k+1>=prizePositions[n-1]-prizePositions[0]){
+            return n;
+        }
+        int ans=0,left=0;
+        vector<int> mx(n+1);
+        for(int right=0;right<n;right++){
+            while(prizePositions[right]-prizePositions[left]>k){
+                left++;
+            }
+            ans=max(ans,mx[left]+right-left+1);
+            mx[right+1]=max(right-left+1,mx[right]);
+        }
+        return ans;
+    }
+};
