@@ -1,0 +1,26 @@
+class Solution {
+public:
+    vector<long long> distance(vector<int>& nums) {
+        int n=nums.size();
+        unordered_map<int,vector<int>> map;
+        vector<long long> arr(n,0);
+        for(int i=0;i<n;i++){
+            map[nums[i]].push_back(i);
+        }
+        long long s[n+1];
+        s[0]=0;
+        for(auto &[_,num]:map){
+            int m=num.size();
+            for(int i=0;i<m;i++){
+                s[i+1]=s[i]+num[i];
+            }
+            for(int i=0;i<m;i++){
+                long long target=num[i];
+                long long left=target*i-s[i];
+                long long right=s[m]-s[i]-target*(m-i);
+                arr[target]=left+right;
+            }
+        }
+        return arr;
+    }
+};
