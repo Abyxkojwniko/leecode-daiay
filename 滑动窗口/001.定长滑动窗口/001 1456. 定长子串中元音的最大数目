@@ -1,0 +1,19 @@
+class Solution {
+public:
+    int maxVowels(string s, int k) {
+        unordered_set<char> yy={'a','e','i','o','u'};
+        int count=0;
+        for(int i=0;i<k;i++){
+            if(yy.count(s[i])){
+                count++;
+            }
+        }
+        int ans=count;
+        for(int i=k;i<s.size();i++){
+            count+=yy.count(s[i]);
+            count-=yy.count(s[i-k]);
+            ans=max(count,ans);
+        }
+        return ans;
+    }
+};
